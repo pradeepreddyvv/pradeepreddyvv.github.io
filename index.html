@@ -3,106 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#012970">
+  <meta name="description" content="Venkata Pradeep Reddy Venuthurla - Full Stack Developer Portfolio">
   <title>Portfolio | Venkata Pradeep Reddy Venuthurla</title>
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link id='favicon' rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-png">
+  <link rel="icon" href="./assets/images/avatar.jpg" type="image/jpeg">
 </head>
-<body oncontextmenu="return false">
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+</div>
 
 <!-- Navbar -->
 <header>
-  <a href="/" class="logo">Portfolio</a>
-  <div id="menu" class="fas fa-bars"></div>
   <nav class="navbar">
-    <ul>
-      <li><a class="active" href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <a href="#home" class="logo">Portfolio</a>
+    <div class="nav-menu">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#education" class="nav-link">Education</a>
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </nav>
 </header>
 
 <!-- Home -->
 <section class="home" id="home">
-  <div class="content" style="color: white;">
-    <img src="./assets/images/avatar.jpg" alt="profile" class="tilt">
-    <h2>Venkata Pradeep Reddy Venuthurla</h2>
-    <p>I am into <span class="typing-text"></span></p>
-    <div class="resumebtn">
-      <a href="https://drive.google.com/file/d/1oZc_oE05wnG2_re7-9EQRDNxHFtzziJ3/view?usp=sharing" target="_blank" class="btn"><span>Resume</span></a>
-    </div>
-    <div class="socials">
-      <ul class="social-icons">
-        <li><a href="https://linkedin.com/in/pradeepreddyvv" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-        <li><a href="https://github.com/pradeepreddyvv" target="_blank"><i class="fab fa-github"></i></a></li>
-        <li><a href="https://leetcode.com/pradeepreddyvv" target="_blank"><i class="fas fa-code"></i></a></li>
-      </ul>
+  <div class="home-overlay"></div>
+  <div class="container">
+    <div class="home-content">
+      <div class="home-text">
+        <h1>Venkata Pradeep Reddy Venuthurla</h1>
+        <p>I am a <span class="typing-text"></span></p>
+        <p class="hero-summary">A results-driven Software Engineer with experience in full-stack development, API integration, and cloud infrastructure. Currently pursuing a Master's in Computer Science at Arizona State University, I specialize in creating robust applications and solving complex technical challenges.</p>
+        <div class="home-buttons">
+          <a href="./Venkata_Pradeep_Reddy_Venuthurla_Resume (6).pdf" target="_blank" class="btn primary">
+            <i class="fas fa-download"></i> Resume
+          </a>
+          <a href="#contact" class="btn secondary">
+            <i class="fas fa-envelope"></i> Contact Me
+          </a>
+        </div>
+        <div class="social-links">
+          <a href="https://linkedin.com/in/pradeepreddyvv" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://github.com/pradeepreddyvv" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://leetcode.com/pradeepreddyvv" target="_blank" aria-label="LeetCode">
+            <i class="fas fa-code"></i>
+          </a>
+        </div>
+      </div>
+      <div class="home-image">
+        <img src="./assets/images/avatar.jpg" alt="Pradeep Reddy" class="profile-img">
+      </div>
     </div>
   </div>
 </section>
 
 <!-- About -->
 <section class="about" id="about">
-  <h2 class="heading"><i class="fas fa-user-alt"></i> About Me</h2>
-  <div class="row">
-    <div class="image">
-      <img src="./assets/images/profile.gif" alt="about me">
-    </div>
-    <div class="content">
-     <p>I am a <b>Software Engineer</b> with expertise in <b>API integration, distributed systems, and full-stack development</b>. At <b>IDFC First Bank</b>, I engineered platforms powering fintech integrations with Amazon Pay, Cred, and Flipkart, architected an API Inventory Platform managing 7,000+ endpoints, and modernized infrastructure with AWS, cutting costs by 50%. I’ve also optimized <b>computer vision models</b> for real-time deployment and contributed to academic research on <b>smart driving assistance</b>.</p> <p>My toolkit spans <b>Python, Java, Golang, React, Kubernetes, AWS, and TensorFlow</b>. Beyond engineering, I’m deeply passionate about <b>AI research, cloud systems, and competitive programming</b>—including achieving <b>Global Rank 22</b> in a CodeChef challenge. I thrive on solving complex problems and continuously pushing technical boundaries.</p>
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <h3>Software Engineer & Full Stack Developer</h3>
+        <p>I'm a passionate software engineer currently pursuing my Master's in Computer Science at Arizona State University. With professional experience at IDFC First Bank in API integration and infrastructure modernization, I've successfully reduced partner onboarding time by 60% and improved developer efficiency through scalable solutions. My expertise spans full-stack development, machine learning, and cloud infrastructure, with a proven track record of delivering high-impact projects that drive business value.</p>
+        <div class="stats">
+          <div class="stat">
+            <h4>7000+</h4>
+            <p>API Endpoints Managed</p>
+          </div>
+          <div class="stat">
+            <h4>60%</h4>
+            <p>Efficiency Improvement</p>
+          </div>
+          <div class="stat">
+            <h4>95%</h4>
+            <p>ML Model Accuracy</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Education -->
 <section class="education" id="education">
-  <h1 class="heading"><i class="fas fa-graduation-cap"></i> Education</h1>
-  <div class="box-container">
-    <div class="box">
-      <div class="image"><img src="./assets/images/educat/ASU.png" alt=""></div>
-      <div class="content">
-        <h3>Arizona State University</h3>
-        <p>Master of Science, Computer Science</p>
-        <h4>Aug 2025 – Dec 2026</h4>
-    </div>
-    </div>
-    <div class="box">
-      <div class="image"><img src="./assets/images/educat/pesu.jpg" alt=""></div>
-      <div class="content">
-        <h3>PES University</h3>
-        <p>Bachelor of Technology, Computer Science and Engineering (CGPA: 3.43/4.0)</p>
-        <h4>Aug 2019 – May 2023</h4>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Projects -->
-<section class="projects" id="projects">
-  <h2 class="heading"><i class="fas fa-laptop-code"></i> Projects</h2>
   <div class="container">
-    <div class="card">
-      <img src="./assets/images/projects/buildmyweb.png" alt="BuildMyWeb" onerror="this.onerror=null;this.src='./assets/images/projects/placeholder-proj-1.svg'">
-      <div class="description">
-        <p class="h3"><b>BuildMyWeb (Image to HTML)</b></p>
-        <p>CV pipeline to convert wireframes into HTML/CSS with OpenCV + TensorFlow (95% text accuracy).</p>
-        <a href="https://github.com/pradeepreddyvv/buildmyweb" class="github-link">GitHub</a>
+    <h2 class="section-title">Education</h2>
+    <div class="education-timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <img src="./assets/images/educat/ASU.png" alt="Arizona State University" class="institution-logo">
+          <h3>Master of Science in Computer Science</h3>
+          <h4>Arizona State University, Tempe</h4>
+          <span class="timeline-date">Expected December 2026</span>
+          <p>Courses: Distributed Database Systems, Statistical Machine Learning, Deep Learning, Cloud Computing, Software Design Patterns</p>
+        </div>
       </div>
-    </div>
-    <div class="card">
-      <img src="./assets/images/projects/smartdriving.png" alt="Smart Driving Assistance" onerror="this.onerror=null;this.src='./assets/images/projects/placeholder-proj-2.svg'">
-      <div class="description">
-        <p class="h3"><b>Smart Driving Assistance</b></p>
-        <p>Research project on lane detection & traffic sign recognition (YOLO + CNN), achieving 95% reliability.</p>
-        <a href="https://github.com/pradeepreddyvv/Smart-Driving-Assistance" class="github-link">GitHub</a>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <img src="./assets/images/educat/pesu.jpg" alt="PES University" class="institution-logo">
+          <h3>Bachelor of Technology in Computer Science and Engineering</h3>
+          <h4>PES University</h4>
+          <span class="timeline-date">August 2019 - May 2023</span>
+          <p>CGPA: 3.43/4.0. Strong foundation in computer science fundamentals and software engineering principles</p>
+        </div>
       </div>
     </div>
   </div>
@@ -110,100 +136,126 @@
 
 <!-- Experience -->
 <section class="experience" id="experience">
-  <h2 class="heading"><i class="fas fa-briefcase"></i> Experience </h2>
-  <div class="timeline">
-    <div class="container right">
-      <div class="content">
-        <div class="tag"><h2>IDFC First Bank</h2></div>
-        <div class="desc"><h3>Software Engineer</h3><p>Jul 2023 – Jul 2025</p></div>
+  <div class="container">
+    <h2 class="section-title">Experience</h2>
+    <div class="experience-grid">
+      <div class="experience-card">
+        <img src="./assets/images/experience/idfc.png" alt="IDFC First Bank" class="company-logo">
+        <h3>Software Engineer, API Integration Team</h3>
+        <h4>IDFC First Bank</h4>
+        <span class="duration">July 2023 - July 2025</span>
+        <ul>
+          <li>Engineered Partner Developer Portal for partners like Amazon Pay and Cred, reducing partner onboarding time by 60%</li>
+          <li>Architected an API Inventory Platform managing 7000+ endpoints, improving developer efficiency by 60% and reducing RBI compliance delays by 40%</li>
+          <li>Enhanced Digital Lending APIs on MuleSoft, scaling to 100+ TPS for Aadhaar OTP and CKYC flows</li>
+          <li>Led infrastructure modernization from On-Premise to AWS and MySQL to Oracle, reducing infra costs by 50%</li>
+        </ul>
+      </div>
+      <div class="experience-card">
+        <img src="./assets/images/experience/idfc.png" alt="IDFC First Bank" class="company-logo">
+        <h3>Application Engineer Intern, API Integration Team</h3>
+        <h4>IDFC First Bank</h4>
+        <span class="duration">February 2023 - June 2023</span>
+        <ul>
+          <li>Built APIs for a collections app, reducing manual data retrieval by 30%</li>
+          <li>Created JLG (Joint Liability Group) APIs to improve operational efficiency and turnaround time by 25%</li>
+          <li>Collaborated with cross-functional teams to deliver high-quality banking solutions</li>
+          <li>Gained hands-on experience with enterprise-level API development and integration</li>
+        </ul>
+      </div>
+      <div class="experience-card">
+        <img src="./assets/images/experience/placeholder-exp-1.svg" alt="Arternal" class="company-logo">
+        <h3>Machine Learning Engineer Intern, Computer Vision Team</h3>
+        <h4>Arternal</h4>
+        <span class="duration">May 2021 - October 2021</span>
+        <ul>
+          <li>Optimized fruit-harvesting robot vision models, boosting disease classification and fruit detection accuracy to 91%</li>
+          <li>Reduced inference time by 20% through model optimization techniques</li>
+          <li>Delivered end-to-end ML workflows, accelerating experimentation cycles by 30%</li>
+          <li>Worked with computer vision technologies to solve real-world agricultural challenges</li>
+        </ul>
       </div>
     </div>
-    <div class="container left">
-      <div class="content">
-        <div class="tag"><h2>IDFC First Bank</h2></div>
-        <div class="desc"><h3>Application Engineer Intern</h3><p>Feb 2023 – Jun 2023</p></div>
-      </div>
-    </div>
-    <div class="container right">
-      <div class="content">
-        <div class="tag"><h2>Arternal</h2></div>
-        <div class="desc"><h3>Computer Vision Engineer Intern</h3><p>May 2021 – Oct 2021</p></div>
-      </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="projects" id="projects">
+  <div class="container">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid" id="projects-container">
+      <!-- Projects will be loaded dynamically -->
     </div>
   </div>
 </section>
 
 <!-- Skills -->
 <section class="skills" id="skills">
-  <h2 class="heading"><i class="fas fa-laptop-code"></i> Skills</h2>
   <div class="container">
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/python.png"/><span>Python</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/java-coffee-cup-logo--v1.png"/><span>Java</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/javascript--v1.png"/><span>JavaScript/TypeScript</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/react-native.png"/><span>React</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/docker.png"/><span>Docker</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/kubernetes.png"/><span>Kubernetes</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/amazon-web-services.png"/><span>AWS</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/tensorflow.png"/><span>TensorFlow</span></div></div>
-    <div class="bar"><div class="info"><img src="https://img.icons8.com/color/48/pytorch.png"/><span>PyTorch</span></div></div>
+    <h2 class="section-title">Skills & Technologies</h2>
+    <div class="skills-grid" id="skills-container">
+      <!-- Skills will be loaded dynamically -->
+    </div>
   </div>
 </section>
 
 <!-- Contact -->
 <section class="contact" id="contact">
-  <h2 class="heading"><i class="fas fa-headset"></i> Get in Touch</h2>
   <div class="container">
-    <form id="contact-form">
-      <div class="form-group">
-        <div class="field"><input type="text" name="name" placeholder="Name" required><i class='fas fa-user'></i></div>
-        <div class="field"><input type="email" name="email" placeholder="Email" required><i class='fas fa-envelope'></i></div>
-        <div class="message"><textarea placeholder="Message" name="message" required></textarea><i class="fas fa-comment-dots"></i></div>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-content">
+      <div class="contact-info">
+        <h3>Let's work together!</h3>
+        <p>I'm always open to discussing new opportunities and interesting projects.</p>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>vvenuth1@asu.edu</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <span>+1 (623) 273-0305</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Tempe, Arizona, USA</span>
+        </div>
       </div>
-      <div class="button-area">
-        <button type="submit">Submit <i class="fa fa-paper-plane"></i></button>
-      </div>
-  </form>
-  <div class="contact-info">
-    <p><i class="fas fa-envelope"></i> vvenuth1@asu.edu</p>
-    <p><i class="fas fa-phone"></i> +1 (623) 273-0305</p>
+      <form class="contact-form" id="contact-form">
+        <div class="form-group">
+          <input type="text" name="from_name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" name="from_email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <input type="text" name="subject" placeholder="Subject" required>
+        </div>
+        <div class="form-group">
+          <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn primary">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
   </div>
 </section>
 
 <!-- Footer -->
-<section class="footer">
-  <div class="box-container">
-    <div class="box">
-      <h3>Pradeep's Portfolio</h3>
-      <p>Thanks for visiting my portfolio. Connect with me on socials or drop me a message!</p>
-    </div>
-    <div class="box">
-      <h3>Quick Links</h3>
-      <a href="#home"><i class="fas fa-chevron-circle-right"></i> Home</a>
-      <a href="#about"><i class="fas fa-chevron-circle-right"></i> About</a>
-      <a href="#projects"><i class="fas fa-chevron-circle-right"></i> Projects</a>
-      <a href="#experience"><i class="fas fa-chevron-circle-right"></i> Experience</a>
-    </div>
-    <div class="box">
-      <h3>Contact Info</h3>
-      <p><i class="fas fa-phone"></i> +1 623-273-0305</p>
-      <p><i class="fas fa-envelope"></i> vvenuth1@asu.edu</p>
-      <p><i class="fas fa-map-marked-alt"></i> Tempe, AZ</p>
-      <div class="share">
-        <a href="https://linkedin.com/in/pradeepreddyvv" class="fab fa-linkedin" target="_blank"></a>
-        <a href="https://github.com/pradeepreddyvv" class="fab fa-github" target="_blank"></a>
-        <a href="mailto:vvenuth1@asu.edu" class="fas fa-envelope" target="_blank"></a>
-      </div>
-    </div>
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 Venkata Pradeep Reddy Venuthurla. All rights reserved.</p>
   </div>
-</section>
+</footer>
 
-<!-- Scroll top -->
-<a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+<!-- Scroll to top -->
+<a href="#home" class="scroll-top" id="scroll-top">
+  <i class="fas fa-chevron-up"></i>
+</a>
 
 <!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js"></script>
-<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script src="./assets/js/script.js"></script>
 
 </body>
