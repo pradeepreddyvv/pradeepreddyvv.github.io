@@ -75,15 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof Typed !== 'undefined' && document.querySelector('.typing-text')) {
     const typed = new Typed('.typing-text', {
       strings: [
-        'Full Stack Development',
-        'Backend Development',
-        'Frontend Development',
-        'Web Development',
+        'Full Stack Developer',
+        'Backend Developer',
+        'Frontend Developer',
+        'Web Developer',
         'API Integration Specialist',
-        'Machine Learning',
-        'Deep Learning',
-        'Computer Vision',
-        'Software Development'
+        'Machine Learning Engineer',
+        'Deep Learning Engineer',
+        'Computer Vision Engineer',
+        'Software Developer'
       ],
       typeSpeed: 80,
       backSpeed: 60,
