@@ -1,0 +1,52 @@
+name: Inject secrets and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Inject Web3Forms key into index.html
+        env:
+          WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+        run: |
+          # Replace placeholder in index.html with the secret from GitHub Actions
+          python - <<'PY'
+import os
+from pathlib import Path
+
+p = Path('index.html')
+if p.exists():
+    text = p.read_text(encoding='utf-8')
+    replaced = text.replace('__WEB3FORMS_KEY__', os.environ.get('WEB3FORMS_KEY', ''))
+    p.write_text(replaced, encoding='utf-8')
+    print('Replaced placeholder in index.html')
+else:
+    print('index.html not found; skipping replacement')
+PY
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+
+      - name: Cleanup (optional)
+        if: always()
+        run: |
+          # Revert the replacement locally so the runner workspace doesn't leak secrets in logs
+          git checkout -- index.html || true
+
+# IMPORTANT SECURITY NOTE:
+# This workflow injects the secret into the deployed static files (index.html). Any secret
+# embedded in client-side assets will be publicly visible after deployment. If your
+# Web3Forms key is sensitive, consider using a server-side proxy (serverless function)
+# or a backend to handle form submissions so secrets are never exposed to end users.

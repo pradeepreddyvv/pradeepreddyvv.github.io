@@ -979,7 +979,9 @@
       
       <form class="contact-form" id="contact-form">
         <!-- Web3Forms integration -->
-        <input type="hidden" name="access_key" value="c447d9e4-3272-43d6-838c-c903a3937d86">
+     <!-- Web3Forms access key removed from source for security.
+       During CI/CD deploy, replace __WEB3FORMS_KEY__ with the real key stored as a GitHub Actions secret. -->
+     <input type="hidden" name="access_key" value="__WEB3FORMS_KEY__">
         <!-- Honeypot (spam prevention) -->
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <!-- Redirect (optional, keep blank to stay on page) -->
