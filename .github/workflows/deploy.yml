@@ -10,9 +10,16 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,11 +32,16 @@ jobs:
           if [ -z "$WEB3FORMS_KEY" ]; then
             echo "::error::WEB3FORMS_KEY secret is not set" && exit 1
           fi
+          if ! grep -q "__WEB3FORMS_KEY__" index.html; then
+            echo "::warning::Placeholder __WEB3FORMS_KEY__ not found in index.html before replacement"
+          fi
           sed -i "s/__WEB3FORMS_KEY__/$WEB3FORMS_KEY/g" index.html
           if grep -q "__WEB3FORMS_KEY__" index.html; then
             echo "::error::Placeholder still present after replacement" && exit 1
           else
             echo "Replacement successful"
+            # Show the access_key line with value redacted for verification
+            grep -n 'name="access_key"' index.html | sed -E 's/(value=")[^"]+"/\1***redacted***"/g' || true
           fi
 
       - name: Setup Pages
