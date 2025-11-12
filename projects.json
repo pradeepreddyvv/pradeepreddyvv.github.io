@@ -1,0 +1,57 @@
+[
+  {
+    "id": "omnisense",
+    "title": "OmniSense - AI Prediction Market Analysis",
+    "description": "Built a 7-agent AI orchestration platform using Next.js, Claude 4.5, and Bayesian probability aggregation. Delivers institutional-grade prediction market analysis with bilateral research, evidence classification, and real-time data integration from Polymarket via MCP.",
+    "image": "./assets/images/projects/omnisense.png",
+    "tags": ["Next.js", "TypeScript", "Claude 4.5", "Bayesian AI", "MCP", "Polymarket"],
+    "badge": "HACKASU",
+    "github": "https://github.com/pradeepreddyvv/Omnisense",
+    "demo": "https://devpost.com/software/omnisense-iw3xla",
+    "featured": true
+  },
+  {
+    "id": "citytraffic",
+    "title": "CityTraffic NLQ and Analytics",
+    "description": "Built distributed analytics platform with geohash-based sharding (RF=3) and LLM-powered query interface, achieving P95 latency <600ms for spatio-temporal queries across 2M+ NYC traffic records using MongoDB Vector Search and natural language processing.",
+    "image": "./assets/images/projects/CityTraffic NLQ and Analytics.jpg",
+    "tags": ["MongoDB", "Vector Search", "Flask", "React", "Airflow", "Locust"],
+    "badge": "ASU Project",
+    "github": "#",
+    "demo": "#",
+    "featured": true
+  },
+  {
+    "id": "code-completion",
+    "title": "Code Completion Models Comparative Analysis",
+    "description": "Implemented and evaluated LSTM, BERT, and CodeGPT-small-java models for Java code completion using PyTorch on 10K+ GitHub repositories, achieving Top-K accuracy benchmarks across multiple context windows (64-256 tokens) for statistical machine learning research.",
+    "image": "./assets/images/projects/Code Completion Models Comparative Analysis.PNG",
+    "tags": ["PyTorch", "HuggingFace", "BERT", "LSTM", "CodeGPT", "Transformers"],
+    "badge": "ASU Research",
+    "github": "#",
+    "featured": false
+  },
+  {
+    "id": "buildmyweb",
+    "title": "BuildMyWeb - Image to HTML/CSS Converter",
+    "description": "Developed a CV pipeline to convert hand-drawn wireframes into HTML/CSS using OpenCV and custom TensorFlow CNN+CTC model, achieving 95% text recognition accuracy. Created React-based editor for real-time UI customization, cutting prototyping time by 30%.",
+    "image": "./assets/images/projects/buildmyweb.jpeg",
+    "tags": ["OpenCV", "TensorFlow", "CNN+CTC", "React", "Flask", "Python"],
+    "badge": "Capstone",
+    "github": "https://github.com/pradeepreddyvv/buildmyweb",
+    "demo": "https://www.youtube.com/watch?v=yyLzYmfoxHw",
+    "featured": true
+  },
+  {
+    "id": "smart-driving",
+    "title": "Smart Driving Assistance System",
+    "description": "Co-authored Springer Nature publication on driver assistance system with lane detection achieving 95%+ reliability. Trained YOLO + CNN models on GTSRB dataset to 90%+ accuracy for traffic sign recognition with integrated voice alerts for real-world deployment.",
+    "image": "./assets/images/projects/Smart Driving Assistance.png",
+    "tags": ["YOLO", "CNN", "OpenCV", "Python", "Deep Learning", "Computer Vision"],
+    "badge": "Published",
+    "github": "https://github.com/pradeepreddyvv/Smart-Driving-Assistance",
+    "paper": "https://link.springer.com/chapter/10.1007/978-3-031-50993-3_32",
+    "demo": "https://www.youtube.com/watch?v=bb5FEbVW14U",
+    "featured": true
+  }
+]
