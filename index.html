@@ -22,8 +22,25 @@
       --dark: #1f2937;
       --light: #f9fafb;
       --white: #ffffff;
+      --text-muted: #4b5563;
+      --border-color: #e5e7eb;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dark mode overrides for inline CSS theme */
+    body.dark-mode {
+      --light: #0a0f1a; /* page background */
+      --white: #0f172a; /* card/background */
+      --dark: #e5e7eb;  /* primary text */
+      --text-muted: #cbd5e1; /* secondary text */
+      --border-color: rgba(255, 255, 255, 0.12);
+      --primary: #1e90ff;
+      --primary-light: #3b82f6;
+      --secondary: #f59e0b;
+      --accent: #64ffda;
+      --shadow: 0 8px 22px rgba(2, 6, 23, 0.5);
+      --shadow-lg: 0 14px 36px rgba(2, 6, 23, 0.6);
     }
 
     * {
@@ -187,7 +204,7 @@
 
     .home-text p {
       font-size: 1.1rem;
-      color: #4b5563;
+      color: var(--text-muted);
       margin-bottom: 2rem;
       line-height: 1.8;
     }
@@ -301,7 +318,7 @@
     .about-text {
       font-size: 1.15rem;
       line-height: 1.9;
-      color: #4b5563;
+      color: var(--text-muted);
       margin-bottom: 3rem;
       text-align: left;
     }
@@ -334,7 +351,7 @@
     }
 
     .stat-card p {
-      color: #6b7280;
+      color: var(--text-muted);
       font-weight: 500;
       font-size: 0.95rem;
     }
@@ -391,7 +408,7 @@
       padding-left: 1.5rem;
       margin-bottom: 0.75rem;
       position: relative;
-      color: #4b5563;
+      color: var(--text-muted);
     }
 
     .timeline-item li::before {
@@ -441,7 +458,7 @@
     }
 
     .project-info p {
-      color: #4b5563;
+      color: var(--text-muted);
       margin-bottom: 1rem;
       line-height: 1.7;
     }
@@ -531,7 +548,7 @@
     }
 
     .contact-info p {
-      color: #4b5563;
+      color: var(--text-muted);
       margin-bottom: 2rem;
       font-size: 1.1rem;
     }
@@ -541,7 +558,7 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 1.5rem;
-      color: #4b5563;
+      color: var(--text-muted);
       font-weight: 500;
     }
 
@@ -566,7 +583,7 @@
     .form-group textarea {
       width: 100%;
       padding: 1rem;
-      border: 2px solid #e5e7eb;
+      border: 2px solid var(--border-color);
       border-radius: 8px;
       font-family: inherit;
       font-size: 1rem;
@@ -586,7 +603,7 @@
 
     /* Footer */
     footer {
-      background: var(--dark);
+      background: var(--primary);
       color: var(--white);
       text-align: center;
       padding: 2rem;
@@ -1064,8 +1081,16 @@
   function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDark);
-    
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+
+    // Update theme-color for mobile address bar
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      const cs = getComputedStyle(document.body);
+      const theme = cs.getPropertyValue('--primary').trim();
+      metaTheme.setAttribute('content', theme || (isDark ? '#0f172a' : '#1e3a8a'));
+    }
+
     const icon = document.querySelector('.theme-toggle i');
     if (icon) {
       icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
@@ -1265,16 +1290,30 @@
 
   // Initialize on load
   document.addEventListener('DOMContentLoaded', () => {
-    // Load dark mode preference
-    const darkMode = localStorage.getItem('darkMode');
-    const themeToggle = document.querySelector('.theme-toggle i');
-    
+    // Load dark mode preference (fallback to OS preference on first load)
+    let darkMode = localStorage.getItem('darkMode');
+    if (!darkMode) {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      darkMode = prefersDark ? 'enabled' : 'disabled';
+      localStorage.setItem('darkMode', darkMode);
+    }
+
     if (darkMode === 'enabled') {
       document.body.classList.add('dark-mode');
-      if (themeToggle) {
-        themeToggle.classList.remove('fa-moon');
-        themeToggle.classList.add('fa-sun');
-      }
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+
+    const themeToggle = document.querySelector('.theme-toggle i');
+    if (themeToggle) {
+      themeToggle.className = (darkMode === 'enabled') ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    // Sync meta theme-color with current theme on load
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      const cs = getComputedStyle(document.body);
+      const theme = cs.getPropertyValue('--primary').trim();
+      metaTheme.setAttribute('content', theme || (darkMode === 'enabled' ? '#0f172a' : '#1e3a8a'));
     }
     
     loadSkills();
