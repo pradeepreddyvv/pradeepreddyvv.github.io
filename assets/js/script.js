@@ -348,7 +348,7 @@
           this.insertBefore(msg, this.firstChild);
           this.reset();
         } else {
-          throw new Error(data.message || 'Web3Forms request failed');
+          throw new Error('Web3Forms request failed');
         }
       } catch(error){
         const msg = document.createElement('div');
