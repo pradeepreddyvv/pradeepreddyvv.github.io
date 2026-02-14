@@ -2,7 +2,7 @@
    PRADEEP REDDY — PORTFOLIO SCRIPTS
    ============================================= */
 
-(function() {
+(function () {
   'use strict';
 
   // ============ THEME TOGGLE ============
@@ -42,10 +42,14 @@
 
   // ============ TYPING ANIMATION ============
   const roles = [
-    'Software Engineer',
-    'Full Stack Developer',
-    'Backend Engineer',
-    'ML / AI Engineer'
+    "Machine Learning", 
+    "Artificial Intelligence", 
+    "Deep Learning", 
+    "Computer Vision", 
+    "Full Stack Development", 
+    "Backend Development", 
+    "Frontend Development", 
+    "Web Development"
   ];
   const typingEl = document.getElementById('typingText');
   let roleIndex = 0, charIndex = 0, isDeleting = false;
@@ -82,26 +86,32 @@
   let cmdActiveIndex = -1;
 
   const commands = [
-    { group: 'Navigation', items: [
-      { icon: 'fa-house', label: 'Go to Home', action: () => scrollTo('#hero'), key: 'H' },
-      { icon: 'fa-user', label: 'Go to About', action: () => scrollTo('#about'), key: 'A' },
-      { icon: 'fa-briefcase', label: 'Go to Experience', action: () => scrollTo('#experience'), key: 'E' },
-      { icon: 'fa-code', label: 'Go to Projects', action: () => scrollTo('#projects'), key: 'P' },
-      { icon: 'fa-cubes', label: 'Go to Skills', action: () => scrollTo('#skills'), key: 'S' },
-      { icon: 'fa-graduation-cap', label: 'Go to Education', action: () => scrollTo('#education') },
-      { icon: 'fa-envelope', label: 'Go to Contact', action: () => scrollTo('#contact'), key: 'C' },
-    ]},
-    { group: 'Actions', items: [
-      { icon: 'fa-file-pdf', label: 'View Resume', action: () => window.open('https://drive.google.com/file/d/19iOmFIesXRM55RN8rl8yY5zhybmMg_rG/view?usp=sharing', '_blank') },
-      { icon: 'fa-brands fa-linkedin', label: 'Open LinkedIn', action: () => window.open('https://linkedin.com/in/pradeep-reddy-vv', '_blank') },
-      { icon: 'fa-brands fa-github', label: 'Open GitHub', action: () => window.open('https://github.com/pradeepreddyvv', '_blank') },
-      { icon: 'fa-envelope', label: 'Send Email', action: () => window.open('mailto:vvenuth1@asu.edu') },
-      { icon: 'fa-circle-half-stroke', label: 'Toggle Dark Mode', action: () => {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        setTheme(isDark ? 'light' : 'dark');
-      }},
-      { icon: 'fa-arrow-up', label: 'Scroll to Top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-    ]},
+    {
+      group: 'Navigation', items: [
+        { icon: 'fa-house', label: 'Go to Home', action: () => scrollTo('#hero'), key: 'H' },
+        { icon: 'fa-user', label: 'Go to About', action: () => scrollTo('#about'), key: 'A' },
+        { icon: 'fa-briefcase', label: 'Go to Experience', action: () => scrollTo('#experience'), key: 'E' },
+        { icon: 'fa-code', label: 'Go to Projects', action: () => scrollTo('#projects'), key: 'P' },
+        { icon: 'fa-cubes', label: 'Go to Skills', action: () => scrollTo('#skills'), key: 'S' },
+        { icon: 'fa-graduation-cap', label: 'Go to Education', action: () => scrollTo('#education') },
+        { icon: 'fa-envelope', label: 'Go to Contact', action: () => scrollTo('#contact'), key: 'C' },
+      ]
+    },
+    {
+      group: 'Actions', items: [
+        { icon: 'fa-file-pdf', label: 'View Resume', action: () => window.open('https://drive.google.com/file/d/19iOmFIesXRM55RN8rl8yY5zhybmMg_rG/view?usp=sharing', '_blank') },
+        { icon: 'fa-brands fa-linkedin', label: 'Open LinkedIn', action: () => window.open('https://linkedin.com/in/pradeep-reddy-vv', '_blank') },
+        { icon: 'fa-brands fa-github', label: 'Open GitHub', action: () => window.open('https://github.com/pradeepreddyvv', '_blank') },
+        { icon: 'fa-envelope', label: 'Send Email', action: () => window.open('mailto:vvenuth1@asu.edu') },
+        {
+          icon: 'fa-circle-half-stroke', label: 'Toggle Dark Mode', action: () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            setTheme(isDark ? 'light' : 'dark');
+          }
+        },
+        { icon: 'fa-arrow-up', label: 'Scroll to Top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+      ]
+    },
   ];
 
   function openCommandPalette() {
@@ -310,7 +320,7 @@
   // ============ CONTACT FORM ============
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
       const btn = this.querySelector('button[type="submit"]');
       const origText = btn.innerHTML;
