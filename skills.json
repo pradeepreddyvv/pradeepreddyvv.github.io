@@ -1,142 +1,44 @@
 {
   "languages": [
-    {
-      "name": "Python",
-      "icon": "https://img.icons8.com/color/48/python.png",
-      "proficiency": "Expert"
-    },
-    {
-      "name": "Java",
-      "icon": "https://img.icons8.com/color/48/java-coffee-cup-logo.png",
-      "proficiency": "Expert"
-    },
-    {
-      "name": "JavaScript",
-      "icon": "https://img.icons8.com/color/48/javascript.png",
-      "proficiency": "Proficient"
-    },
-    {
-      "name": "TypeScript",
-      "icon": "https://img.icons8.com/color/48/typescript.png",
-      "proficiency": "Proficient"
-    },
-    {
-      "name": "C/C++",
-      "icon": "https://img.icons8.com/color/48/c-plus-plus-logo.png",
-      "proficiency": "Intermediate"
-    },
-    {
-      "name": "SQL",
-      "icon": "https://img.icons8.com/color/48/sql.png",
-      "proficiency": "Proficient"
-    }
+    { "name": "Python", "icon": "python" },
+    { "name": "Java", "icon": "openjdk" },
+    { "name": "C/C++", "icon": "cplusplus" },
+    { "name": "JavaScript", "icon": "javascript" },
+    { "name": "TypeScript", "icon": "typescript" },
+    { "name": "SQL", "icon": "postgresql" },
+    { "name": "Go", "icon": "go" }
   ],
   "frameworks": [
-    {
-      "name": "Spring Boot",
-      "icon": "https://img.icons8.com/color/48/spring-logo.png"
-    },
-    {
-      "name": "React.js",
-      "icon": "https://img.icons8.com/color/48/react-native.png"
-    },
-    {
-      "name": "Node.js",
-      "icon": "https://img.icons8.com/color/48/nodejs.png"
-    },
-    {
-      "name": "Flask",
-      "icon": "https://img.icons8.com/color/48/flask.png"
-    },
-    {
-      "name": "MuleSoft",
-      "icon": "https://img.icons8.com/color/48/api-settings.png"
-    },
-    {
-      "name": "PyTorch",
-      "icon": "https://img.icons8.com/color/48/pytorch.png"
-    },
-    {
-      "name": "TensorFlow",
-      "icon": "https://img.icons8.com/color/48/tensorflow.png"
-    },
-    {
-      "name": "Keras",
-      "icon": "https://img.icons8.com/color/48/tensorflow.png"
-    }
-  ],
-  "cloud": [
-    {
-      "name": "AWS",
-      "icon": "https://img.icons8.com/color/48/amazon-web-services.png"
-    },
-    {
-      "name": "GCP",
-      "icon": "https://img.icons8.com/color/48/google-cloud.png"
-    },
-    {
-      "name": "Docker",
-      "icon": "https://img.icons8.com/color/48/docker.png"
-    },
-    {
-      "name": "Kubernetes",
-      "icon": "https://img.icons8.com/color/48/kubernetes.png"
-    },
-    {
-      "name": "Git",
-      "icon": "https://img.icons8.com/color/48/git.png"
-    },
-    {
-      "name": "Linux",
-      "icon": "https://img.icons8.com/color/48/linux.png"
-    }
+    { "name": "Spring Boot", "icon": "springboot" },
+    { "name": "React", "icon": "react" },
+    { "name": "Next.js", "icon": "nextdotjs" },
+    { "name": "Node.js", "icon": "nodedotjs" },
+    { "name": "Flask", "icon": "flask" },
+    { "name": "FastAPI", "icon": "fastapi" }
   ],
   "databases": [
-    {
-      "name": "PostgreSQL",
-      "icon": "https://img.icons8.com/color/48/postgreesql.png"
-    },
-    {
-      "name": "MySQL",
-      "icon": "https://img.icons8.com/color/48/mysql-logo.png"
-    },
-    {
-      "name": "MongoDB",
-      "icon": "https://img.icons8.com/color/48/mongodb.png"
-    },
-    {
-      "name": "Oracle",
-      "icon": "https://img.icons8.com/color/48/oracle-logo.png"
-    },
-    {
-      "name": "Redis",
-      "icon": "https://img.icons8.com/color/48/redis.png"
-    },
-    {
-      "name": "Elasticsearch",
-      "icon": "https://img.icons8.com/color/48/elasticsearch.png"
-    },
-    {
-      "name": "Kafka",
-      "icon": "https://img.icons8.com/color/48/apache-kafka.png"
-    }
+    { "name": "PostgreSQL", "icon": "postgresql" },
+    { "name": "MongoDB", "icon": "mongodb" },
+    { "name": "Redis", "icon": "redis" },
+    { "name": "Kafka", "icon": "apachekafka" },
+    { "name": "Elasticsearch", "icon": "elasticsearch" },
+    { "name": "Oracle", "icon": "oracle" }
   ],
-  "tools": [
-    {
-      "name": "OpenCV",
-      "icon": "https://img.icons8.com/color/48/opencv.png"
-    },
-    {
-      "name": "Spark",
-      "icon": "https://img.icons8.com/color/48/apache-spark.png"
-    },
-    {
-      "name": "Airflow",
-      "icon": "https://img.icons8.com/color/48/cloud.png"
-    },
-    {
-      "name": "Jira",
-      "icon": "https://img.icons8.com/color/48/jira.png"
-    }
+  "cloud": [
+    { "name": "AWS", "icon": "amazonwebservices" },
+    { "name": "Docker", "icon": "docker" },
+    { "name": "Kubernetes", "icon": "kubernetes" },
+    { "name": "Terraform", "icon": "terraform" },
+    { "name": "GitHub Actions", "icon": "githubactions" },
+    { "name": "Linux", "icon": "linux" },
+    { "name": "Git", "icon": "git" }
+  ],
+  "ml": [
+    { "name": "PyTorch", "icon": "pytorch" },
+    { "name": "TensorFlow", "icon": "tensorflow" },
+    { "name": "OpenCV", "icon": "opencv" },
+    { "name": "Hugging Face", "icon": "huggingface" },
+    { "name": "scikit-learn", "icon": "scikitlearn" },
+    { "name": "LangChain", "icon": "langchain" }
   ]
 }
