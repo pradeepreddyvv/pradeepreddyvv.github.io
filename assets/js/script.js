@@ -322,37 +322,47 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
+      const web3Key = "WEB3FORMS_KEY";
       const btn = this.querySelector('button[type="submit"]');
       const origText = btn.innerHTML;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
       btn.disabled = true;
-
+      
       // Remove old messages
       this.querySelectorAll('.success-message, .error-message').forEach(m => m.remove());
+      const formData = new FormData(this);
+      
+      formData.append('access_key', web3Key);
+      console.log('Contact form element:', formData);
 
-      try {
-        if (typeof emailjs !== 'undefined') {
-          await emailjs.sendForm('service_rq2vqsq', 'template_ii7hxhu', this);
+      try{
+        const response = await fetch("https://api.web3forms.com/submit",{
+          method: "POST",
+          body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
           const msg = document.createElement('div');
           msg.className = 'success-message';
           msg.textContent = 'Message sent successfully! I\'ll get back to you soon.';
           this.insertBefore(msg, this.firstChild);
           this.reset();
         } else {
-          throw new Error('EmailJS not loaded');
+          throw new Error(data.message || 'Web3Forms request failed');
         }
-      } catch (err) {
+      } catch(error){
         const msg = document.createElement('div');
         msg.className = 'error-message';
         msg.textContent = 'Failed to send message. Please email me directly at vvenuth1@asu.edu';
         this.insertBefore(msg, this.firstChild);
       }
-
-      btn.innerHTML = origText;
-      btn.disabled = false;
-      setTimeout(() => {
+      finally {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        setTimeout(() => {
         this.querySelectorAll('.success-message, .error-message').forEach(m => m.remove());
       }, 5000);
+    }
     });
   }
 
