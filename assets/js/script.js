@@ -322,7 +322,6 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const web3Key = "__WEB3FORMS_KEY__";
       const btn = this.querySelector('button[type="submit"]');
       const origText = btn.innerHTML;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
@@ -331,9 +330,6 @@
       // Remove old messages
       this.querySelectorAll('.success-message, .error-message').forEach(m => m.remove());
       const formData = new FormData(this);
-      
-      formData.append('access_key', web3Key);
-      console.log('Contact form element:', formData);
 
       try{
         const response = await fetch("https://api.web3forms.com/submit",{
