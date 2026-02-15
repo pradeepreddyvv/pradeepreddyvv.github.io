@@ -29,10 +29,18 @@ jobs:
           WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
         run: |
           set -euo pipefail
+          echo "Secret length: ${#WEB3FORMS_KEY}"
           test -n "$WEB3FORMS_KEY"
-          grep -q "__WEB3FORMS_KEY__" index.html
-          sed -i "s/__WEB3FORMS_KEY__/$WEB3FORMS_KEY/g" index.html
-          ! grep -q "__WEB3FORMS_KEY__" index.html
+          echo "Before replacement:"
+          grep "access_key" index.html
+          sed -i "s|__WEB3FORMS_KEY__|${WEB3FORMS_KEY}|g" index.html
+          echo "After replacement:"
+          grep "access_key" index.html
+          if grep -q "__WEB3FORMS_KEY__" index.html; then
+            echo "ERROR: Placeholder was NOT replaced!"
+            exit 1
+          fi
+          echo "✅ Secret injected successfully"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

@@ -337,6 +337,7 @@
           body: formData
         });
         const data = await response.json();
+        // if (response.ok && data.success) {
         if (response.ok) {
           const msg = document.createElement('div');
           msg.className = 'success-message';
