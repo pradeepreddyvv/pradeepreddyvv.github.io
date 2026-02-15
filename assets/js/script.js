@@ -322,7 +322,7 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-      const web3Key = "WEB3FORMS_KEY";
+      const web3Key = "__WEB3FORMS_KEY__";
       const btn = this.querySelector('button[type="submit"]');
       const origText = btn.innerHTML;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
