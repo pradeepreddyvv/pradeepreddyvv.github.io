@@ -38,6 +38,7 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --high-contrast-text: #000;
 }
 
 /* Dark theme */
@@ -68,20 +69,7 @@
   --glass-border: rgba(255, 255, 255, 0.06);
   --shadow: 0 4px 20px rgba(0,0,0,0.3);
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
-}
-
-/* Dark mode overrides for hardcoded black text */
-[data-theme="dark"] .project-info p,
-[data-theme="dark"] .project-tags span,
-[data-theme="dark"] .edu-date,
-[data-theme="dark"] .edu-content p,
-[data-theme="dark"] .achievement-card p,
-[data-theme="dark"] .footer-col > p,
-[data-theme="dark"] .footer-links li a,
-[data-theme="dark"] .footer-contact li,
-[data-theme="dark"] .footer-socials a,
-[data-theme="dark"] .footer-bottom p {
-  color: var(--text-secondary);
+  --high-contrast-text: var(--text-secondary);
 }
 
 /* Reset */
@@ -550,12 +538,12 @@ header.scrolled { border-bottom-color: var(--border); }
   margin-bottom: 10px;
 }
 .project-info p {
-  font-size: 0.95rem; color: #000; line-height: 1.75;
+  font-size: 0.95rem; color: var(--high-contrast-text); line-height: 1.75;
   margin-bottom: 14px;
 }
 .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 .project-tags span {
-  background: var(--surface); color: #000;
+  background: var(--surface); color: var(--high-contrast-text);
   padding: 3px 9px; border-radius: 4px; font-size: 0.78rem;
   font-family: var(--mono); border: 1px solid var(--border);
 }
@@ -635,7 +623,7 @@ header.scrolled { border-bottom-color: var(--border); }
 .edu-content h4 { font-size: 1rem; color: var(--accent-light); font-weight: 600; margin-bottom: 9px; }
 .edu-date {
   display: inline-block; font-family: var(--mono); font-size: 0.9rem;
-  color: #000; margin-bottom: 8px;
+  color: var(--high-contrast-text); margin-bottom: 8px;
 }
 .edu-highlight {
   display: inline-block; background: var(--green-glow);
@@ -643,7 +631,7 @@ header.scrolled { border-bottom-color: var(--border); }
   font-size: 0.8rem; font-weight: 600; font-family: var(--mono);
   margin-bottom: 8px;
 }
-.edu-content p { font-size: 0.95rem; color: #000; line-height: 1.75; }
+.edu-content p { font-size: 0.95rem; color: var(--high-contrast-text); line-height: 1.75; }
 
 /* Achievements */
 .subsection-title {
@@ -663,7 +651,7 @@ header.scrolled { border-bottom-color: var(--border); }
 }
 .achievement-icon { font-size: 2.15rem; margin-bottom: 12px; }
 .achievement-card h4 { font-size: 1.08rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-.achievement-card p { font-size: 0.92rem; color: #000; line-height: 1.7; }
+.achievement-card p { font-size: 0.92rem; color: var(--high-contrast-text); line-height: 1.7; }
 .achievement-link {
   display: block;
 }
@@ -735,11 +723,11 @@ header.scrolled { border-bottom-color: var(--border); }
   margin-bottom: 16px;
 }
 .footer-col > p {
-  font-size: 0.85rem; color: #000; line-height: 1.7;
+  font-size: 0.85rem; color: var(--high-contrast-text); line-height: 1.7;
 }
 .footer-links { display: flex; flex-direction: column; gap: 8px; }
 .footer-links li a {
-  font-size: 0.85rem; color: #000;
+  font-size: 0.85rem; color: var(--high-contrast-text);
   display: flex; align-items: center; gap: 8px;
   transition: var(--transition);
 }
@@ -747,7 +735,7 @@ header.scrolled { border-bottom-color: var(--border); }
 .footer-links li a:hover { color: var(--accent); }
 .footer-contact { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
 .footer-contact li {
-  font-size: 0.85rem; color: #000;
+  font-size: 0.85rem; color: var(--high-contrast-text);
   display: flex; align-items: center; gap: 10px;
 }
 .footer-contact li i { color: var(--accent); width: 16px; text-align: center; font-size: 0.85rem; }
@@ -757,7 +745,7 @@ header.scrolled { border-bottom-color: var(--border); }
   align-items: center; justify-content: center;
   border-radius: 50%; background: var(--surface);
   border: 1px solid var(--border);
-  color: #000; font-size: 0.9rem;
+  color: var(--high-contrast-text); font-size: 0.9rem;
   transition: var(--transition);
 }
 .footer-socials a:hover {
@@ -768,7 +756,7 @@ header.scrolled { border-bottom-color: var(--border); }
   text-align: center; padding-top: 20px;
   border-top: 1px solid var(--border);
 }
-.footer-bottom p { font-size: 0.8rem; color: #000; }
+.footer-bottom p { font-size: 0.8rem; color: var(--high-contrast-text); }
 
 /* ============ SCROLL TO TOP ============ */
 .scroll-top {

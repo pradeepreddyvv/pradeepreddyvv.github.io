@@ -8,16 +8,17 @@
   // ============ THEME TOGGLE ============
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon = themeToggle ? themeToggle.querySelector('i') : null;
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
 
   function setTheme(theme) {
     if (theme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
       if (themeIcon) { themeIcon.className = 'fas fa-sun'; }
-      document.querySelector('meta[name="theme-color"]').content = '#0a0a0a';
+      if (themeMeta) themeMeta.content = '#0a0a0a';
     } else {
       document.documentElement.removeAttribute('data-theme');
       if (themeIcon) { themeIcon.className = 'fas fa-moon'; }
-      document.querySelector('meta[name="theme-color"]').content = '#ffffff';
+      if (themeMeta) themeMeta.content = '#ffffff';
     }
     localStorage.setItem('theme', theme);
   }
@@ -55,6 +56,7 @@
   let roleIndex = 0, charIndex = 0, isDeleting = false;
 
   function typeRole() {
+    if (!typingEl) return;
     const current = roles[roleIndex];
     if (!isDeleting) {
       typingEl.textContent = current.slice(0, charIndex + 1);
@@ -76,7 +78,9 @@
       setTimeout(typeRole, 40);
     }
   }
-  setTimeout(typeRole, 500);
+  if (typingEl) {
+    setTimeout(typeRole, 500);
+  }
 
   // ============ COMMAND PALETTE ============
   const cmdOverlay = document.getElementById('cmdOverlay');
@@ -115,6 +119,7 @@
   ];
 
   function openCommandPalette() {
+    if (!cmdOverlay || !cmdInput || !cmdResults) return;
     cmdOverlay.classList.add('active');
     cmdInput.value = '';
     cmdActiveIndex = -1;
@@ -124,12 +129,14 @@
   }
 
   function closeCommandPalette() {
+    if (!cmdOverlay) return;
     cmdOverlay.classList.remove('active');
   }
 
   window.openCommandPalette = openCommandPalette;
 
   function renderCmdResults(query) {
+    if (!cmdResults) return;
     const q = query.toLowerCase().trim();
     let html = '';
     commands.forEach(group => {
@@ -153,6 +160,7 @@
   }
 
   function bindCmdItems() {
+    if (!cmdResults) return;
     const items = cmdResults.querySelectorAll('.cmd-item');
     items.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -164,6 +172,7 @@
   }
 
   function navigateCmd(dir) {
+    if (!cmdResults) return;
     const items = cmdResults.querySelectorAll('.cmd-item');
     if (!items.length) return;
     items.forEach(i => i.classList.remove('active'));
@@ -174,29 +183,59 @@
     items[cmdActiveIndex].scrollIntoView({ block: 'nearest' });
   }
 
-  cmdInput.addEventListener('input', () => renderCmdResults(cmdInput.value));
-  cmdInput.addEventListener('keydown', e => {
-    if (e.key === 'ArrowDown') { e.preventDefault(); navigateCmd(1); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); navigateCmd(-1); }
-    else if (e.key === 'Enter') {
-      e.preventDefault();
-      const items = cmdResults.querySelectorAll('.cmd-item');
-      if (cmdActiveIndex >= 0 && items[cmdActiveIndex]) {
-        items[cmdActiveIndex].click();
-      } else if (items.length) {
-        items[0].click();
+  if (cmdInput && cmdResults) {
+    cmdInput.addEventListener('input', () => renderCmdResults(cmdInput.value));
+    cmdInput.addEventListener('keydown', e => {
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          navigateCmd(1);
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          navigateCmd(-1);
+          break;
+        case 'Enter': {
+          e.preventDefault();
+          const items = cmdResults.querySelectorAll('.cmd-item');
+          let targetItem = null;
+          if (items[cmdActiveIndex]) {
+            targetItem = items[cmdActiveIndex];
+          } else if (items[0]) {
+            targetItem = items[0];
+          }
+          if (targetItem) {
+            targetItem.click();
+          }
+          break;
+        }
+        default:
+          break;
       }
-    }
-  });
-  cmdOverlay.addEventListener('click', e => { if (e.target === cmdOverlay) closeCommandPalette(); });
+    });
+  }
+  if (cmdOverlay) {
+    cmdOverlay.addEventListener('click', e => { if (e.target === cmdOverlay) closeCommandPalette(); });
+  }
 
   // Keyboard shortcut: Cmd+K / Ctrl+K
   document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    const isModifierPressed = e.metaKey || e.ctrlKey;
+    const isKShortcut = isModifierPressed && e.key === 'k';
+    const isEscape = e.key === 'Escape';
+    const isPaletteOpen = cmdOverlay && cmdOverlay.classList.contains('active');
+
+    if (isKShortcut) {
       e.preventDefault();
-      cmdOverlay.classList.contains('active') ? closeCommandPalette() : openCommandPalette();
+      if (!cmdOverlay) return;
+      if (isPaletteOpen) {
+        closeCommandPalette();
+      } else {
+        openCommandPalette();
+      }
     }
-    if (e.key === 'Escape' && cmdOverlay.classList.contains('active')) {
+
+    if (isEscape && isPaletteOpen) {
       closeCommandPalette();
     }
   });
@@ -320,6 +359,18 @@
 
   // ============ CONTACT FORM ============
   const contactForm = document.getElementById('contact-form');
+
+  function removeFormAlerts(formEl) {
+    formEl.querySelectorAll('.success-message, .error-message').forEach(el => el.remove());
+  }
+
+  function showFormAlert(formEl, type, text) {
+    const msg = document.createElement('div');
+    msg.className = `${type}-message`;
+    msg.textContent = text;
+    formEl.insertBefore(msg, formEl.firstChild);
+  }
+
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -329,38 +380,30 @@
       btn.disabled = true;
       
       // Remove old messages
-      this.querySelectorAll('.success-message, .error-message').forEach(m => m.remove());
+      removeFormAlerts(this);
       const formData = new FormData(this);
 
-      try{
-        const response = await fetch("https://api.web3forms.com/submit",{
-          method: "POST",
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
           body: formData
         });
         const data = await response.json();
-        // if (response.ok && data.success) {
-        if (response.ok) {
-          const msg = document.createElement('div');
-          msg.className = 'success-message';
-          msg.textContent = 'Message sent successfully! I\'ll get back to you soon.';
-          this.insertBefore(msg, this.firstChild);
+        if (response.ok && data.success) {
+          showFormAlert(this, 'success', 'Message sent successfully! I\'ll get back to you soon.');
           this.reset();
         } else {
           throw new Error('Web3Forms request failed');
         }
-      } catch(error){
-        const msg = document.createElement('div');
-        msg.className = 'error-message';
-        msg.textContent = 'Failed to send message. Please email me directly at vvenuth1@asu.edu';
-        this.insertBefore(msg, this.firstChild);
-      }
-      finally {
+      } catch (error) {
+        showFormAlert(this, 'error', 'Failed to send message. Please email me directly at vvenuth1@asu.edu');
+      } finally {
         btn.innerHTML = origText;
         btn.disabled = false;
         setTimeout(() => {
-        this.querySelectorAll('.success-message, .error-message').forEach(m => m.remove());
-      }, 5000);
-    }
+          removeFormAlerts(this);
+        }, 5000);
+      }
     });
   }
 
