@@ -29,34 +29,22 @@ jobs:
           WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
         run: |
           set -euo pipefail
-          # Debug: show secret length and check for hidden chars
-          echo "Secret length: ${#WEB3FORMS_KEY}"
-          printf "Secret hex dump: " && echo -n "$WEB3FORMS_KEY" | xxd | head -2
           test -n "$WEB3FORMS_KEY" || { echo "ERROR: Secret is empty"; exit 1; }
-
-          echo "=== Before ==="
-          grep "access_key" index.html
 
           # Use python3 for reliable string replacement (no sed delimiter issues)
           python3 -c "
           import os, sys
           key = os.environ['WEB3FORMS_KEY'].strip()
-          print(f'Stripped key length: {len(key)}')
           with open('index.html', 'r') as f:
               content = f.read()
           count = content.count('__WEB3FORMS_KEY__')
-          print(f'Occurrences found: {count}')
           if count == 0:
               print('ERROR: Placeholder not found in index.html')
               sys.exit(1)
           content = content.replace('__WEB3FORMS_KEY__', key)
           with open('index.html', 'w') as f:
               f.write(content)
-          print(f'Replaced {count} occurrence(s)')
           "
-
-          echo "=== After ==="
-          grep "access_key" index.html
           if grep -q "__WEB3FORMS_KEY__" index.html; then
             echo "ERROR: Placeholder was NOT replaced!"
             exit 1
