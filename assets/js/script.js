@@ -304,12 +304,13 @@
       Object.keys(data).forEach(category => {
         const container = document.getElementById('skills-' + category);
         if (!container) return;
-        container.innerHTML = data[category].map(skill =>
-          `<div class="skill-item">
-            <img src="https://cdn.simpleicons.org/${skill.icon}" alt="${skill.name}" onerror="this.style.display='none'">
+        container.innerHTML = data[category].map(skill => {
+          const iconSrc = skill.iconUrl || `https://cdn.simpleicons.org/${skill.icon}`;
+          return `<div class="skill-item">
+            <img src="${iconSrc}" alt="${skill.name}" onerror="this.style.display='none'">
             <span>${skill.name}</span>
-          </div>`
-        ).join('');
+          </div>`;
+        }).join('');
       });
     } catch (e) {
       console.warn('Skills load error:', e);

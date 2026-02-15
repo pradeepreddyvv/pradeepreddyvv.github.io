@@ -484,13 +484,14 @@ header.scrolled { border-bottom-color: var(--border); }
 }
 .skill-category h3 i { color: var(--accent); font-size: 0.9rem; }
 .skills-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 10px;
 }
 .skill-item {
   display: flex; align-items: center; gap: 10px;
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 10px 14px;
+  border-radius: var(--radius); padding: 10px 12px;
+  min-width: 0;
   transition: var(--transition);
 }
 .skill-item:hover {
@@ -502,7 +503,9 @@ header.scrolled { border-bottom-color: var(--border); }
 [data-theme="dark"] .skill-item img { filter: invert(1); }
 .skill-item span {
   font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
 }
 
 /* ============ EDUCATION ============ */
@@ -731,6 +734,6 @@ header.scrolled { border-bottom-color: var(--border); }
 }
 
 @media (max-width: 480px) {
-  .skills-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .skills-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
   .edu-card { flex-direction: column; gap: 12px; }
 }

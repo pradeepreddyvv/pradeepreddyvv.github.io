@@ -25,7 +25,7 @@
     { "name": "Oracle", "icon": "oracle" }
   ],
   "cloud": [
-    { "name": "AWS", "icon": "amazonwebservices" },
+    { "name": "AWS", "icon": "amazon-aws", "iconUrl": "https://img.icons8.com/?size=100&id=e6uRfPIDgoXi&format=png&color=000000" },
     { "name": "Docker", "icon": "docker" },
     { "name": "Kubernetes", "icon": "kubernetes" },
     { "name": "Terraform", "icon": "terraform" },
