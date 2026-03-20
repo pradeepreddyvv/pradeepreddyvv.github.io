@@ -254,6 +254,24 @@
       color: var(--text-muted);
     }
 
+    /* Time range selector */
+    .range-selector {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap;
+    }
+    .range-btn {
+      padding: 6px 14px; border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent; color: var(--text-secondary);
+      font-size: 0.8rem; cursor: pointer;
+      font-family: var(--font); transition: all 0.2s;
+    }
+    .range-btn:hover { border-color: var(--accent); color: var(--text); }
+    .range-btn.active {
+      background: var(--accent); color: #fff;
+      border-color: var(--accent);
+    }
+
     @media (max-width: 768px) {
       .two-col { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -310,7 +328,18 @@
 
   <!-- Daily Chart -->
   <div>
-    <div class="section-title"><i class="fas fa-chart-bar"></i> Daily Views (Last 30 Days)</div>
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+      <div class="section-title" style="margin-bottom:0;"><i class="fas fa-chart-bar"></i> Views Over Time</div>
+      <div class="range-selector">
+        <button class="range-btn" data-days="7">7 Days</button>
+        <button class="range-btn" data-days="14">2 Weeks</button>
+        <button class="range-btn" data-days="21">3 Weeks</button>
+        <button class="range-btn active" data-days="30">1 Month</button>
+        <button class="range-btn" data-days="180">6 Months</button>
+        <button class="range-btn" data-days="365">1 Year</button>
+        <button class="range-btn" data-days="1825">5 Years</button>
+      </div>
+    </div>
     <div class="chart-container">
       <div class="loading" id="chartLoading"><i class="fas fa-spinner fa-spin"></i> Loading chart...</div>
       <div class="bar-chart" id="barChart" style="display:none;"></div>
@@ -388,6 +417,8 @@
   }
 
   // ============ DASHBOARD ============
+  let currentRange = 30;
+
   async function loadDashboard() {
     if (!window.PortfolioAnalytics) {
       document.querySelectorAll('.loading').forEach(el => {
@@ -397,16 +428,16 @@
     }
 
     try {
-      // Load all data in parallel
+      // Load all data in parallel — fetch full history for stats, default range for chart
       const [stats, cities, daily, recent] = await Promise.all([
         window.PortfolioAnalytics.getStats(),
         window.PortfolioAnalytics.getCityBreakdown(),
-        window.PortfolioAnalytics.getDailyViews(30),
+        window.PortfolioAnalytics.getDailyViews(currentRange),
         window.PortfolioAnalytics.getRecentVisitors(30)
       ]);
 
       renderStats(stats, cities);
-      renderChart(daily);
+      renderChart(daily, currentRange);
       renderCities(cities);
       renderRecent(recent);
     } catch (err) {
@@ -417,41 +448,108 @@
     }
   }
 
+  // Range selector
+  document.querySelectorAll('.range-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const days = parseInt(btn.dataset.days);
+      document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentRange = days;
+
+      const chart = document.getElementById('barChart');
+      chart.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-muted);"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+
+      try {
+        const daily = await window.PortfolioAnalytics.getDailyViews(days);
+        renderChart(daily, days);
+      } catch (err) {
+        chart.innerHTML = `<div style="padding:40px;text-align:center;color:var(--red);">Error: ${err.message}</div>`;
+      }
+    });
+  });
+
   function renderStats(stats, cities) {
     document.getElementById('totalViews').textContent = stats.totalViews.toLocaleString();
     document.getElementById('uniqueVisitors').textContent = stats.uniqueVisitors.toLocaleString();
     document.getElementById('totalCities').textContent = cities.length.toLocaleString();
 
-    // Today's views
     const today = new Date().toISOString().split('T')[0];
     const todayCount = stats.visits.filter(v => v.visited_at && v.visited_at.startsWith(today)).length;
     document.getElementById('todayViews').textContent = todayCount.toLocaleString();
     document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
   }
 
-  function renderChart(daily) {
+  // Group daily data into buckets for large ranges
+  function aggregateData(daily, days) {
+    if (days <= 30) return daily; // Show daily bars for <= 1 month
+
+    // For 6 months: group by week. For 1yr+: group by month.
+    const groupByMonth = days > 180;
+
+    const buckets = {};
+    daily.forEach(d => {
+      let key;
+      if (groupByMonth) {
+        key = d.date.slice(0, 7); // "YYYY-MM"
+      } else {
+        // Week: get Monday of the week
+        const dt = new Date(d.date + 'T00:00:00');
+        const day = dt.getDay();
+        const diff = dt.getDate() - day + (day === 0 ? -6 : 1);
+        const monday = new Date(dt.setDate(diff));
+        key = monday.toISOString().split('T')[0];
+      }
+      if (!buckets[key]) buckets[key] = { date: key, views: 0, uniqueVisitors: 0 };
+      buckets[key].views += d.views;
+      buckets[key].uniqueVisitors += d.uniqueVisitors;
+    });
+
+    return Object.values(buckets).sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  function renderChart(daily, days) {
     document.getElementById('chartLoading').style.display = 'none';
     const chart = document.getElementById('barChart');
     chart.style.display = 'flex';
 
     if (daily.length === 0) {
-      chart.innerHTML = '<div class="empty-state">No data for the last 30 days</div>';
+      chart.innerHTML = '<div class="empty-state">No data for this period</div>';
       return;
     }
 
-    const maxViews = Math.max(...daily.map(d => d.views), 1);
+    const aggregated = aggregateData(daily, days);
+    const maxViews = Math.max(...aggregated.map(d => d.views), 1);
+    const groupByMonth = days > 180;
+    const groupByWeek = days > 30 && days <= 180;
 
-    chart.innerHTML = daily.map(d => {
+    chart.innerHTML = aggregated.map(d => {
       const height = Math.max((d.views / maxViews) * 180, 2);
-      const dateLabel = new Date(d.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      let dateLabel;
+      if (groupByMonth) {
+        const [y, m] = d.date.split('-');
+        dateLabel = new Date(y, m - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+      } else if (groupByWeek) {
+        dateLabel = 'W' + getWeekLabel(d.date);
+      } else {
+        dateLabel = new Date(d.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+      const tooltipPrefix = groupByMonth ? 'Month' : groupByWeek ? 'Week of' : '';
+      const tooltipDate = groupByMonth
+        ? new Date(d.date + '-01T00:00:00').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+        : new Date(d.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       return `
         <div class="bar-group">
           <div class="bar" style="height:${height}px">
-            <div class="bar-tooltip">${dateLabel}: ${d.views} views, ${d.uniqueVisitors} unique</div>
+            <div class="bar-tooltip">${tooltipPrefix ? tooltipPrefix + ' ' : ''}${tooltipDate}: ${d.views} views, ${d.uniqueVisitors} unique</div>
           </div>
           <span class="bar-label">${dateLabel}</span>
         </div>`;
     }).join('');
+  }
+
+  function getWeekLabel(dateStr) {
+    const dt = new Date(dateStr + 'T00:00:00');
+    return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 
   function countryFlag(code) {
