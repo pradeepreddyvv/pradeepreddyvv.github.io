@@ -31,7 +31,6 @@ jobs:
           set -euo pipefail
           test -n "$WEB3FORMS_KEY" || { echo "ERROR: Secret is empty"; exit 1; }
 
-          # Use python3 for reliable string replacement (no sed delimiter issues)
           python3 -c "
           import os, sys
           key = os.environ['WEB3FORMS_KEY'].strip()
@@ -49,7 +48,45 @@ jobs:
             echo "ERROR: Placeholder was NOT replaced!"
             exit 1
           fi
-          echo "✅ Secret injected successfully"
+          echo "✅ Web3Forms key injected successfully"
+
+      - name: Inject Supabase credentials into analytics.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$SUPABASE_URL" || { echo "ERROR: SUPABASE_URL secret is empty"; exit 1; }
+          test -n "$SUPABASE_ANON_KEY" || { echo "ERROR: SUPABASE_ANON_KEY secret is empty"; exit 1; }
+
+          python3 -c "
+          import os, sys
+
+          url = os.environ['SUPABASE_URL'].strip()
+          key = os.environ['SUPABASE_ANON_KEY'].strip()
+
+          filepath = 'assets/js/analytics.js'
+          with open(filepath, 'r') as f:
+              content = f.read()
+
+          if '__SUPABASE_URL__' not in content:
+              print('ERROR: __SUPABASE_URL__ placeholder not found in analytics.js')
+              sys.exit(1)
+          if '__SUPABASE_ANON_KEY__' not in content:
+              print('ERROR: __SUPABASE_ANON_KEY__ placeholder not found in analytics.js')
+              sys.exit(1)
+
+          content = content.replace('__SUPABASE_URL__', url)
+          content = content.replace('__SUPABASE_ANON_KEY__', key)
+
+          with open(filepath, 'w') as f:
+              f.write(content)
+          "
+          if grep -q "__SUPABASE_URL__\|__SUPABASE_ANON_KEY__" assets/js/analytics.js; then
+            echo "ERROR: Supabase placeholders were NOT replaced!"
+            exit 1
+          fi
+          echo "✅ Supabase credentials injected successfully"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -62,4 +99,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
