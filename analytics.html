@@ -379,9 +379,10 @@
 <script src="./assets/js/analytics.js"></script>
 
 <script>
+  // ============ STATE ============
+  let currentRange = 30;
+
   // ============ AUTH ============
-  // Simple hash-based password check
-  // Default password: "pradeep2024" — change the hash below for a different password
   const PASSWORD_HASH = '48640df1'; // djb2 hash — password: pr@d33p_stats
 
   function djb2(str) {
@@ -417,8 +418,6 @@
   }
 
   // ============ DASHBOARD ============
-  let currentRange = 30;
-
   async function loadDashboard() {
     if (!window.PortfolioAnalytics) {
       document.querySelectorAll('.loading').forEach(el => {
