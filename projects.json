@@ -22,6 +22,17 @@
     "featured": true
   },
   {
+    "id": "interviewcoach",
+    "title": "InterviewCoach - AI Mock Interview Platform",
+    "description": "Built voice-first mock interview platform with immersive 3D Three.js office scene, real-time Speechmatics speech transcription, Claude-powered STAR framework scoring with sentence-level analysis, adaptive follow-up questions, and spoken AI feedback with word-by-word highlighting. Features Google OAuth, resume parsing, company-specific question generation from scraped interview data, and progress tracking.",
+    "image": "./assets/images/projects/interviewcoach.png",
+    "tags": ["Next.js", "Claude AI", "Three.js", "Speechmatics", "PostgreSQL", "Google OAuth"],
+    "badge": "CBC Hackathon",
+    "github": "https://github.com/metalgenesis123321/CBC-Hackathon",
+    "demo": "#",
+    "featured": true
+  },
+  {
     "id": "citytraffic",
     "title": "CityTraffic NLQ and Analytics",
     "description": "Built distributed analytics platform with geohash-based sharding (RF=3) and LLM-powered query interface, achieving P95 latency <600ms for spatio-temporal queries across 2M+ NYC traffic records using MongoDB Vector Search and natural language processing.",
