@@ -1,5 +1,5 @@
 /* =============================================
-   PRADEEP REDDY — PORTFOLIO SCRIPTS
+   PRADEEP REDDY - PORTFOLIO SCRIPTS
    ============================================= */
 
 (function () {

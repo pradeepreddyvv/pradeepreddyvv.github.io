@@ -2,7 +2,7 @@
   {
     "id": "workshift",
     "title": "WorkShift - AI Career Transition Analytics",
-    "description": "Built a 3-phase deterministic analytics engine that scores career transitions using real-time labor market data from O*NET, BLS, and JSearch APIs. Features parallel data fetching, Oxford-formula automation risk scoring, skill overlap analysis, and a guardrail validation engine that prevents nonsensical results — delivering explainable, reproducible feasibility reports.",
+    "description": "Built a 3-phase deterministic analytics engine that scores career transitions using real-time labor market data from O*NET, BLS, and JSearch APIs. Features parallel data fetching, Oxford-formula automation risk scoring, skill overlap analysis, and a guardrail validation engine that prevents nonsensical results - delivering explainable, reproducible feasibility reports.",
     "image": "./assets/images/projects/workshift.png",
     "tags": ["React", "TypeScript", "Supabase", "O*NET API", "BLS API", "Node.js"],
     "badge": "ASU Spark Challenge",

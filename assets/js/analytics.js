@@ -1,5 +1,5 @@
 /* =============================================
-   PORTFOLIO ANALYTICS — Visitor Tracking
+   PORTFOLIO ANALYTICS - Visitor Tracking
    Uses ipapi.co for geolocation + Supabase for storage
    ============================================= */
 
@@ -89,7 +89,7 @@
 
       await supabasePost('visits', visitData);
     } catch (err) {
-      // Silently fail — analytics should never break the site
+      // Silently fail - analytics should never break the site
       console.warn('[Analytics] Tracking failed:', err.message);
     }
   }

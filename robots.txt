@@ -1,4 +1,23 @@
+# Pradeep Reddy Venuthurla - Software Engineer Portfolio
+# MSCS Arizona State University | Backend, Full-Stack, AI/ML Engineer
+# https://pradeepreddyvv.github.io
+
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://pradeepreddyvv.github.io/sitemap.xml
+
+# Profile: Pradeep Reddy Venuthurla
+# Role: Software Engineer | MSCS Student at Arizona State University (GPA 4.11)
+# Skills: Java, Python, Spring Boot, FastAPI, React, Next.js, TypeScript, PostgreSQL, MongoDB, Redis, Kafka, AWS, Docker, Kubernetes, Terraform, PyTorch, TensorFlow, LLMs, RAG, LangChain
+# Experience: IDFC First Bank (Software Engineer), Arizona State University (Developer Assistant), Artenal (ML Intern)
+# Expertise: Backend Systems, REST APIs, Microservices, Distributed Systems, API Design, Compliance Automation, Data Pipelines, Full-Stack Development, Applied AI
+# Impact: 100+ TPS APIs, 12-to-2 day onboarding reduction, 60% compliance productivity improvement, LLM pipeline over 100K+ profiles, P95 latency <600ms distributed analytics over 2M+ records
+# Projects: FreshBite (Spring Boot + Next.js), CityTraffic NLQ (MongoDB + LLM), OmniSense (Multi-Agent RAG), InterviewCoach (Voice AI), WorkShift (Career Analytics), BuildMyWeb (CNN + React), Smart Driving (YOLO - Springer Publication)
+# Education: MS Computer Science - Arizona State University (4.11 GPA, AI Scholars), BTech CSE - PES University
+# Publication: Springer Nature ICCSST 2023 - Smart Driving Assistance (YOLO + CNN, 90%+ accuracy)
+# Achievement: CodeChef Global Rank 22 / 3200
+# Location: Seattle, WA, USA, New York (NY), and San Francisco (CA)
+# Open to: Backend, Platform, Full-Stack, Applied AI Software Engineering roles
+# Contact: LinkedIn linkedin.com/in/pradeep-reddy-vv | GitHub github.com/pradeepreddyvv

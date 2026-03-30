@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Analytics — Pradeep Reddy Portfolio</title>
+  <title>Analytics - Pradeep Reddy Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -306,23 +306,23 @@
   <div class="stats-grid" id="statsGrid">
     <div class="stat-card">
       <div class="stat-label">Total Page Views</div>
-      <div class="stat-value blue" id="totalViews">—</div>
+      <div class="stat-value blue" id="totalViews">-</div>
       <div class="stat-sub">All time</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Unique Visitors</div>
-      <div class="stat-value green" id="uniqueVisitors">—</div>
+      <div class="stat-value green" id="uniqueVisitors">-</div>
       <div class="stat-sub">By browser fingerprint</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Cities Reached</div>
-      <div class="stat-value purple" id="totalCities">—</div>
+      <div class="stat-value purple" id="totalCities">-</div>
       <div class="stat-sub">Worldwide</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Today's Views</div>
-      <div class="stat-value amber" id="todayViews">—</div>
-      <div class="stat-sub" id="todayDate">—</div>
+      <div class="stat-value amber" id="todayViews">-</div>
+      <div class="stat-sub" id="todayDate">-</div>
     </div>
   </div>
 
@@ -383,7 +383,7 @@
   let currentRange = 30;
 
   // ============ AUTH ============
-  const PASSWORD_HASH = '48640df1'; // djb2 hash — password: pr@d33p_stats
+  const PASSWORD_HASH = '48640df1'; // djb2 hash - password: pr@d33p_stats
 
   function djb2(str) {
     let hash = 5381;
@@ -427,7 +427,7 @@
     }
 
     try {
-      // Load all data in parallel — fetch full history for stats, default range for chart
+      // Load all data in parallel - fetch full history for stats, default range for chart
       const [stats, cities, daily, recent] = await Promise.all([
         window.PortfolioAnalytics.getStats(),
         window.PortfolioAnalytics.getCityBreakdown(),

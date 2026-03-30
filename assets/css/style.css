@@ -1,5 +1,5 @@
 /* =============================================
-   PRADEEP REDDY — PORTFOLIO STYLES
+   PRADEEP REDDY - PORTFOLIO STYLES
    Light Theme Default + Dark Toggle
    ============================================= */
 
@@ -319,7 +319,7 @@ header.scrolled { border-bottom-color: var(--border); }
 }
 .btn-full { width: 100%; justify-content: center; }
 
-/* Resume dropdown — kept for compatibility */
+/* Resume dropdown - kept for compatibility */
 .resume-dropdown { position: relative; }
 
 /* ============ SECTIONS ============ */

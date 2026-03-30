@@ -1,6 +1,6 @@
 # pradeepreddyvv.github.io
 
-Personal portfolio website for **Pradeep Reddy Venuthurla** — MS Computer Science at Arizona State University.
+Personal portfolio website for **Pradeep Reddy Venuthurla** - MS Computer Science at Arizona State University.
 
 ## Live Site
 
