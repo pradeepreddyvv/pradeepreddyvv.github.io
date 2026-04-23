@@ -103,7 +103,7 @@
     },
     {
       group: 'Actions', items: [
-        { icon: 'fa-file-pdf', label: 'View Resume', action: () => window.open('https://drive.google.com/file/d/19iOmFIesXRM55RN8rl8yY5zhybmMg_rG/view?usp=sharing', '_blank') },
+        { icon: 'fa-file-pdf', label: 'View Resume', action: () => window.open('https://drive.google.com/file/d/19injXJ2XHsf5Bb7Wj4MdMt6HDzwnfQS3/view?usp=sharing', '_blank') },
         { icon: 'fa-brands fa-linkedin', label: 'Open LinkedIn', action: () => window.open('https://linkedin.com/in/pradeep-reddy-vv', '_blank') },
         { icon: 'fa-brands fa-github', label: 'Open GitHub', action: () => window.open('https://github.com/pradeepreddyvv', '_blank') },
         { icon: 'fa-envelope', label: 'Send Email', action: () => window.open('mailto:vvenuth1@asu.edu') },
