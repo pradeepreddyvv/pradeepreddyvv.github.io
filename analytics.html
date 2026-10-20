@@ -383,26 +383,24 @@
   let currentRange = 30;
 
   // ============ AUTH ============
-  const PASSWORD_HASH = '48640df1'; // djb2 hash - password: pr@d33p_stats
-
-  function djb2(str) {
-    let hash = 5381;
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) + hash) + str.charCodeAt(i);
-      hash = hash & hash;
-    }
-    return Math.abs(hash).toString(16).slice(0, 8);
+  // The password is checked by the analytics API (aws/portfolio-analytics), not in this page.
+  function showDashboard() {
+    document.getElementById('authOverlay').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    loadDashboard();
   }
 
-  function authenticate() {
+  async function authenticate() {
     const input = document.getElementById('authPassword').value;
-    if (djb2(input) === PASSWORD_HASH) {
-      sessionStorage.setItem('analytics_auth', '1');
-      document.getElementById('authOverlay').classList.add('hidden');
-      document.getElementById('dashboard').classList.remove('hidden');
-      loadDashboard();
-    } else {
-      document.getElementById('authError').style.display = 'block';
+    const error = document.getElementById('authError');
+    error.style.display = 'none';
+    if (!window.PortfolioAnalytics) { error.textContent = 'Analytics API is not configured.'; error.style.display = 'block'; return; }
+    try {
+      await window.PortfolioAnalytics.login(input);
+      showDashboard();
+    } catch (err) {
+      error.textContent = err.unauthorized ? 'Incorrect password. Try again.' : `Could not reach analytics: ${err.message}`;
+      error.style.display = 'block';
     }
   }
 
@@ -411,17 +409,18 @@
   });
 
   // Auto-login if already authenticated this session
-  if (sessionStorage.getItem('analytics_auth') === '1') {
-    document.getElementById('authOverlay').classList.add('hidden');
-    document.getElementById('dashboard').classList.remove('hidden');
-    loadDashboard();
+  if (sessionStorage.getItem('analytics_pw')) showDashboard();
+
+  // Visitor-supplied text is escaped before it goes into the page.
+  function esc(v) {
+    return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
   // ============ DASHBOARD ============
   async function loadDashboard() {
     if (!window.PortfolioAnalytics) {
       document.querySelectorAll('.loading').forEach(el => {
-        el.innerHTML = '<span style="color:var(--red);">Analytics not configured. Set up Supabase credentials in analytics.js</span>';
+        el.innerHTML = '<span style="color:var(--red);">Analytics not configured. Set the API URL in analytics.js</span>';
       });
       return;
     }
@@ -442,7 +441,8 @@
     } catch (err) {
       console.error('[Analytics Dashboard]', err);
       document.querySelectorAll('.loading').forEach(el => {
-        el.innerHTML = `<span style="color:var(--red);">Error loading data: ${err.message}</span>`;
+        if (err.unauthorized) { sessionStorage.removeItem('analytics_pw'); location.reload(); return; }
+        el.innerHTML = `<span style="color:var(--red);">Error loading data: ${esc(err.message)}</span>`;
       });
     }
   }
@@ -552,7 +552,7 @@
   }
 
   function countryFlag(code) {
-    if (!code || code === '--') return '';
+    if (!code || !/^[A-Za-z]{2}$/.test(code)) return '';
     return code.toUpperCase().replace(/./g, c =>
       String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65)
     ) + ' ';
@@ -571,7 +571,7 @@
 
     body.innerHTML = cities.slice(0, 25).map(c => `
       <tr>
-        <td><span class="flag">${countryFlag(c.country_code)}</span>${c.city}, ${c.country}</td>
+        <td><span class="flag">${countryFlag(c.country_code)}</span>${esc(c.city)}, ${esc(c.country)}</td>
         <td><span class="badge badge-blue">${c.views}</span></td>
         <td><span class="badge badge-green">${c.uniqueVisitors}</span></td>
       </tr>
@@ -601,8 +601,8 @@
 
     container.innerHTML = visitors.map(v => `
       <div class="visitor-row">
-        <span class="visitor-city">${countryFlag(v.country_code)}${v.city}, ${v.country_code}</span>
-        <span class="visitor-meta">${v.screen_resolution || ''}</span>
+        <span class="visitor-city">${countryFlag(v.country_code)}${esc(v.city)}, ${esc(v.country_code)}</span>
+        <span class="visitor-meta">${esc(v.screen_resolution)}</span>
         <span class="visitor-time">${timeAgo(v.visited_at)}</span>
       </div>
     `).join('');

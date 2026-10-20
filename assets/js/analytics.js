@@ -1,20 +1,19 @@
 /* =============================================
    PORTFOLIO ANALYTICS - Visitor Tracking
-   Uses ipapi.co for geolocation + Supabase for storage
+   Uses ipapi.co for geolocation + an AWS Lambda/DynamoDB API for storage
+   (aws/portfolio-analytics; replaced Supabase in Oct 2026)
    ============================================= */
 
 (function () {
   'use strict';
 
   // ============ CONFIGURATION ============
-  // Replace these with your Supabase project credentials
-  const SUPABASE_URL = '__SUPABASE_URL__';
-  const SUPABASE_ANON_KEY = '__SUPABASE_ANON_KEY__';
+  // Public Lambda Function URL (not a secret: it only accepts visits; reading them needs the dashboard password).
+  const API_URL = 'https://rlqjcy5xg46rnouu7f3t75zmua0hfypc.lambda-url.us-west-2.on.aws/';
   const GEO_API = 'https://ipapi.co/json/';
 
-  // Skip tracking if Supabase is not configured
-  if (SUPABASE_URL.startsWith('__') || SUPABASE_ANON_KEY.startsWith('__')) {
-    console.warn('[Analytics] Supabase not configured. Skipping tracking.');
+  if (API_URL.startsWith('__')) {
+    console.warn('[Analytics] API not configured. Skipping tracking.');
     return;
   }
 
@@ -39,27 +38,30 @@
     return 'fp_' + Math.abs(hash).toString(36);
   }
 
-  // ============ SUPABASE HELPERS ============
-  function supabasePost(table, data) {
-    return fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+  // ============ API HELPERS ============
+  const base = API_URL.replace(/\/+$/, '');
+  function postVisit(data) {
+    return fetch(`${base}/visit`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify(data)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      keepalive: true
     });
   }
 
-  function supabaseGet(table, query) {
-    return fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, {
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-      }
-    }).then(r => r.json());
+  // Dashboard: one request per page load; every view below is computed from it.
+  let visitsPromise = null;
+  function getVisits(password) {
+    if (!visitsPromise) {
+      visitsPromise = fetch(`${base}/visits`, { headers: { 'x-dashboard-password': password || sessionStorage.getItem('analytics_pw') || '' } })
+        .then(async r => {
+          if (r.status === 401) throw Object.assign(new Error('Wrong password'), { unauthorized: true });
+          if (!r.ok) throw new Error(`Analytics API HTTP ${r.status}`);
+          return (await r.json()).visits;
+        })
+        .catch(e => { visitsPromise = null; throw e; });
+    }
+    return visitsPromise;
   }
 
   // ============ TRACK VISIT ============
@@ -79,15 +81,13 @@
         latitude: geo.latitude || null,
         longitude: geo.longitude || null,
         timezone: geo.timezone || null,
-        ip: geo.ip || null,
         page: window.location.pathname,
         referrer: document.referrer || null,
         user_agent: navigator.userAgent,
-        screen_resolution: screen.width + 'x' + screen.height,
-        visited_at: new Date().toISOString()
+        screen_resolution: screen.width + 'x' + screen.height
       };
 
-      await supabasePost('visits', visitData);
+      await postVisit(visitData);
     } catch (err) {
       // Silently fail - analytics should never break the site
       console.warn('[Analytics] Tracking failed:', err.message);
@@ -96,10 +96,15 @@
 
   // ============ PUBLIC API (for dashboard) ============
   window.PortfolioAnalytics = {
-    supabaseGet: supabaseGet,
+    /** Checks the password on the server (throws {unauthorized} if wrong) and keeps it for this browser tab. */
+    async login(password) {
+      visitsPromise = null;
+      await getVisits(password);
+      sessionStorage.setItem('analytics_pw', password);
+    },
 
     async getStats() {
-      const visits = await supabaseGet('visits', 'select=*&order=visited_at.desc');
+      const visits = await getVisits();
       const uniqueFingerprints = new Set(visits.map(v => v.fingerprint));
 
       return {
@@ -110,7 +115,7 @@
     },
 
     async getCityBreakdown() {
-      const visits = await supabaseGet('visits', 'select=city,country,country_code,fingerprint');
+      const visits = await getVisits();
       const cityMap = {};
       visits.forEach(v => {
         const key = `${v.city}, ${v.country}`;
@@ -129,7 +134,9 @@
     async getDailyViews(days = 30) {
       const since = new Date();
       since.setDate(since.getDate() - days);
-      const visits = await supabaseGet('visits', `select=visited_at,fingerprint&visited_at=gte.${since.toISOString()}&order=visited_at.asc`);
+      const visits = (await getVisits())
+        .filter(v => v.visited_at && new Date(v.visited_at) >= since)
+        .sort((a, b) => a.visited_at.localeCompare(b.visited_at));
 
       const dailyMap = {};
       visits.forEach(v => {
@@ -147,7 +154,7 @@
     },
 
     async getRecentVisitors(limit = 50) {
-      return supabaseGet('visits', `select=city,country,country_code,page,referrer,screen_resolution,visited_at&order=visited_at.desc&limit=${limit}`);
+      return (await getVisits()).slice(0, limit);
     }
   };
 

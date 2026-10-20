@@ -27,7 +27,7 @@ Portfolio showcasing software engineering projects, work experience, publication
 - **Frontend**: HTML5, CSS3 (custom properties, grid, flexbox), vanilla JavaScript
 - **Data**: JSON-driven project and skills rendering
 - **Features**: Dark/light theme, command palette (Cmd+K), smooth scroll, typing animation
-- **Integrations**: Web3Forms (contact), Tawk.io (live chat), EmailJS, Supabase (analytics)
+- **Integrations**: Web3Forms (contact), Tawk.io (live chat), EmailJS, AWS Lambda + DynamoDB (analytics, see aws/portfolio-analytics)
 - **Hosting**: GitHub Pages with custom GitHub Actions deployment
 
 ## Contact
